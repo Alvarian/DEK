@@ -1,43 +1,20 @@
-const options = {
-  connect: (client, dc, isFresh) => {
-        const cp = client.connectionParameters;
-        console.log(isFresh)
-        console.log('Connected to database:', cp.database);
-  },
-  query: (e) => {
-    console.log(e.query);
-  },
+const sqlite3 = require('sqlite3').verbose();
+const path = require('path');
 
-};
+const databaseFile = path.join(__dirname, 'database.sqlite'); // SQLite file location
 
-const pgp = require('pg-promise')(options);
-const os = require('os');
-const databaseName = 'project_3_db';
-const db = (() => {
-  if (process.env.NODE_ENV === 'development' || !process.env.NODE_ENV) {
-
-    if(os.type() === 'Darwin'){
-        return pgp({
-          database: databaseName,
-          port: 5432,
-          host: 'localhost'
-        });
-    }
-    return pgp({
-      database: databaseName,
-      port: 5432,
-      host: 'localhost',
-      user: 'postgres',
-      password: ''
-    });
-
+const db = new sqlite3.Database(databaseFile, (err) => {
+  if (err) {
+    console.error('Error connecting to SQLite:', err.message);
+  } else {
+    console.log('Connected to SQLite database:', databaseFile);
   }
-  else if (process.env.NODE_ENV === 'production') {
-    return pgp(process.env.DATABASE_URL);
-  }
-  // console.log(`test: ${pgp(process.env.DATABASE_URL)}`);
-  // return pgp(process.env.DATABASE_URL);
-})();
+});
 
-// const db = pgp(process.env.DATABASE_URL);
+// Log all queries (similar to pg-promise options)
+db.on('trace', (query) => {
+  console.log('Executing query:', query);
+});
+
+// Export the database object
 module.exports = db;

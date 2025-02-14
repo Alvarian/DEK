@@ -2,27 +2,27 @@ const db = require('../db/config');
 
 const User = {};
 
-
-
-User.findByUserName = username =>{
-    return db.one(`
-        SELECT * FROM users
-        WHERE username = $1
-    `,[username]);
-}
-
-
-
-User.create = user =>{
-    return db.one(`
-        INSERT INTO users
-        (username, email, password_digest, firstname, lastname)
-        VALUES
-        ($1,$2,$3,$4,$5)
-        RETURNING *
-    `, [user.username, user.email, user.password_digest, user.firstname, user.lastname]);
+User.findByUserName = (username) => {
+    return new Promise((resolve, reject) => {
+        db.get(`SELECT * FROM users WHERE username = ?`, [username], (err, row) => {
+            if (err) reject(err);
+            else resolve(row);
+        });
+    });
 };
 
-
+User.create = (user) => {
+    return new Promise((resolve, reject) => {
+        db.run(
+            `INSERT INTO users (username, email, password_digest, firstname, lastname) 
+            VALUES (?, ?, ?, ?, ?)`,
+            [user.username, user.email, user.password_digest, user.firstname, user.lastname],
+            function (err) {
+                if (err) reject(err);
+                else resolve({ id: this.lastID, ...user });
+            }
+        );
+    });
+};
 
 module.exports = User;
