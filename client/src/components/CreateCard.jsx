@@ -25,6 +25,7 @@ class CreateCard extends Component{
   handleFormSubmit(e) {
     e.preventDefault();
     // console.log(this.state);
+    console.log("from createcard", this.props.state.user)
     axios.post('/decks', {
         question: this.state.question,
         answer: this.state.answer,

@@ -38,7 +38,7 @@ class App extends Component {
       username,
       password,
     }).then(res => {
-      console.log(res.data.user)
+      console.log("from auth",res.data.user)
 
       this.setState({
         auth: res.data.auth,

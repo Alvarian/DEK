@@ -18,13 +18,13 @@ const Header = (props) => {
             <Link to="/main"><h1 className="brand-logo left">Dek</h1></Link>
             <a href="#!" data-activates="mobile-demo" className="button-collapse show-on-large"><i className="material-icons">menu</i></a>
             <ul className="side-nav" id="mobile-demo">
-              <li><Link className='nav-link' Link to="/main">Home</Link></li>
-              <li><Link className='nav-link' Link to="/userprofile">My Profile</Link></li>
-              <li><Link className='nav-link' Link to="/createcard">Create Card</Link></li>
-              <li><Link className='nav-link' Link to="/editcards">Edit Cards</Link></li>
-              <li><Link className='nav-link' Link to="/pickquiztype">Pick Quiz</Link></li>
-              <li><Link className='nav-link' Link to="/aboutapp">About DEK</Link></li>
-              <li><Link className='nav-link' Link to="/">Log out</Link></li>
+              <li><a className='nav-link' href="/main">Home</a></li>
+              <li><a className='nav-link' href="/userprofile">My Profile</a></li>
+              <li><a className='nav-link' href="/createcard">Create Card</a></li>
+              <li><a className='nav-link' href="/editcards">Edit Cards</a></li>
+              <li><a className='nav-link' href="/pickquiztype">Pick Quiz</a></li>
+              <li><a className='nav-link' href="/aboutapp">About DEK</a></li>
+              <li><a className='nav-link' href="/">Log out</a></li>
             </ul>
           </div>
         </nav>
